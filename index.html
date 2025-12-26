@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuaderno + Reproductor Sin Deformar</title>
+    <title>Series y juegos TV</title>
     <style>
         body {
             margin: 0;
@@ -12,24 +12,24 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Carátula de fondo (primer enlace) */
-            background-image: url("https://drive.google.com/uc?export=view&id=1dF3rLchh-n4iGk9zTyOb2v2MxhOD3Ix0");
+            /* Carátula de fondo como la que tenías antes */
+            background-image: url("https://i.imgur.com/5Z7X7QH.png");
             background-size: cover;
             background-position: center;
         }
 
-        /* 👇 ESTA PARTE GARANTIZA QUE EL REPRODUCTOR NO SE DEFORME 👇 */
+        /* Esta imagen ES el reproductor, así que la centramos y ajustamos */
         .reproductor {
-            max-width: 90%; /* No es demasiado ancho */
-            max-height: 90%; /* No es demasiado alto */
-            width: auto; /* Mantiene el ancho original respecto al alto */
-            height: auto; /* Mantiene el alto original respecto al ancho */
-            display: block;
+            max-width: 80%;
+            max-height: 70%;
+            width: auto;
+            height: auto;
+            border: none; /* Sin borde extra */
         }
     </style>
 </head>
 <body>
-    <!-- Reproductor (segundo enlace) CON FORMA ORIGINAL -->
-    <img class="reproductor" src="https://drive.google.com/uc?export=view&id=1MQ8xaywPscWNnrbv5ZF36Q5PwB3zpue7" alt="Reproductor con forma original">
+    <!-- Aquí va la imagen QUE ES EL REPRODUCTOR, en el centro -->
+    <img class="reproductor" src="https://i.imgur.com/BDLdfvr.png" alt="Reproductor de series y juegos">
 </body>
 </html>
