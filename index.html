@@ -3,27 +3,359 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reproductor de Video PlayerJS</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>series y juegos TV</title> <!-- Nombre de la página -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        /* Color principal: Anaranjado metalizado */
+        :root {
+            --color-principal: #e67e22; /* Base anaranjada */
+            --color-metalizado: #f39c12; /* Brillo metalizado */
+            --color-sombra: #d35400; /* Sombra para profundidad */
+            --color-fondo: #1a1a1a; /* Fondo oscuro complementario */
+            --color-texto: #ffffff; /* Texto claro por defecto */
+            --color-texto-secundario: #f1c40f; /* Texto acorde al anaranjado */
+        }
+        body {
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            line-height: 1.6;
+        }
+        /* Encabezado de la página */
+        .encabezado {
+            background: linear-gradient(to right, var(--color-sombra), var(--color-principal), var(--color-metalizado));
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .encabezado h1 {
+            font-size: 24px;
+            color: var(--color-texto);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+            text-align: center;
+        }
+        /* Barra de categorías */
+        .barra-categorias {
+            width: 100%;
+            overflow-x: auto;
+            display: flex;
+            gap: 10px;
+            padding-bottom: 5px;
+        }
+        .categoria-btn {
+            background-color: var(--color-principal);
+            border: none;
+            color: var(--color-texto);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .categoria-btn:hover,
+        .categoria-btn.activa {
+            background-color: var(--color-metalizado);
+            color: var(--color-fondo);
+            transform: scale(1.05);
+        }
+        /* Contenedor principal */
+        .contenedor-principal {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        /* Sección de reproductor */
+        .seccion-reproductor {
+            margin-bottom: 30px;
+        }
+        .reproductor-contenedor {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            background-color: black;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+        }
+        #videoPlayer {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .controles {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+            padding: 20px 15px 10px;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .reproductor-contenedor:hover .controles,
+        .reproductor-contenedor.pausado .controles,
+        .reproductor-contenedor:focus-within .controles,
+        .reproductor-contenedor.hover .controles {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .barra-progreso {
+            width: 100%;
+            height: 3px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            margin-bottom: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: height 0.2s ease;
+        }
+        .reproductor-contenedor:hover .barra-progreso,
+        .barra-progreso:active {
+            height: 5px;
+        }
+        .progreso-actual {
+            width: 0%;
+            height: 100%;
+            background-color: var(--color-metalizado); /* Barra de progreso acorde al color */
+            border-radius: 2px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .punto-progreso {
+            width: 12px;
+            height: 12px;
+            background-color: var(--color-metalizado);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .barra-progreso:hover .punto-progreso {
+            opacity: 1;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .controles-basicos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--color-texto-secundario); /* Texto de tiempo acorde al color */
+            font-size: 14px;
+        }
+        .boton-play {
+            background: none;
+            border: none;
+            color: var(--color-texto);
+            font-size: 28px;
+            cursor: pointer;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .campo-url {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+            transition: opacity 0.3s ease;
+        }
+        .campo-url input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            background-color: rgba(255,255,255,0.2);
+            color: var(--color-texto);
+            font-size: 14px;
+            outline: none;
+            backdrop-filter: blur(5px);
+        }
+        .campo-url input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        .campo-url button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            background-color: var(--color-principal);
+            color: var(--color-texto);
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .campo-url button:hover {
+            background-color: var(--color-metalizado);
+        }
+        .reproductor-contenedor.reproduciendo:not(:hover):not(.hover) .campo-url {
+            opacity: 0;
+            pointer-events: none;
+        }
+        /* Sección de contenido por categoría */
+        .seccion-contenido {
+            margin-top: 20px;
+        }
+        .seccion-contenido h2 {
+            font-size: 20px;
+            color: var(--color-metalizado); /* Título de sección acorde al color */
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .lista-contenido {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        .item-contenido {
+            background-color: var(--color-principal);
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+        .item-contenido:hover {
+            transform: translateY(-5px);
+            background-color: var(--color-metalizado);
+        }
+        .item-contenido img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            display: block;
+        }
+        .item-contenido p {
+            padding: 10px;
+            font-size: 14px;
+            color: var(--color-fondo);
+            text-align: center;
+            font-weight: 500;
+        }
+        /* Pie de página */
+        .pie-pagina {
+            background: linear-gradient(to right, var(--color-sombra), var(--color-principal), var(--color-metalizado));
+            padding: 15px;
+            text-align: center;
+            color: var(--color-texto);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+            margin-top: 30px;
+        }
+    </style>
+    <!-- Cargar fuente Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="reproductor">
-        <video id="miVideo" class="video-principal" src="URL_DEL_VIDEO_MP4"></video>
-
-        <div class="controles">
-            <button id="botonPlayPause" class="boton"><i class="fas fa-play"></i></button>
-            <div class="tiempo">
-                <span id="tiempoActual">0:00</span> / <span id="tiempoTotal">0:00</span>
-            </div>
-            <input type="range" id="barraProgreso" class="barra-progreso" value="0" step="1" min="0">
-            <button id="botonMute" class="boton"><i class="fas fa-volume-up"></i></button>
-            <input type="range" id="barraVolumen" class="barra-volumen" value="1" step="0.01" min="0" max="1">
-            <button id="botonVelocidad" class="boton"><i class="fas fa-cog"></i></button>
-            <button id="botonPantallaCompleta" class="boton"><i class="fas fa-expand"></i></button>
+    <!-- Encabezado con nombre de página y categorías -->
+    <header class="encabezado">
+        <h1>series y juegos TV</h1>
+        <div class="barra-categorias" id="barraCategorias">
+            <button class="categoria-btn activa" data-categoria="todos">Todos</button>
+            <button class="categoria-btn" data-categoria="peliculas">Películas</button>
+            <button class="categoria-btn" data-categoria="series">Series</button>
+            <button class="categoria-btn" data-categoria="novelas">Novelas</button>
+            <button class="categoria-btn" data-categoria="accion">Acción</button>
+            <button class="categoria-btn" data-categoria="comedia">Comedia</button>
+            <button class="categoria-btn" data-categoria="juegos">Juegos</button>
         </div>
-    </div>
+    </header>
 
-    <script src="script.js"></script>
-</body>
-</html>
+    <!-- Contenedor principal -->
+    <main class="contenedor-principal">
+        <!-- Sección de reproductor -->
+        <section class="seccion-reproductor">
+            <div class="reproductor-contenedor" id="reproductorContenedor">
+                <div class="campo-url">
+                    <input type="text" id="urlInput" placeholder="Pega URL MP4 o M3U8 o toca un contenido de abajo">
+                    <button id="cargarBtn">Cargar</button>
+                </div>
+                <video id="videoPlayer" muted></video>
+                <div class="controles">
+                    <div class="barra-progreso" id="barraProgreso">
+                        <div class="progreso-actual" id="progresoActual"></div>
+                        <div class="punto-progreso" id="puntoProgreso"></div>
+                    </div>
+                    <div class="controles-basicos">
+                        <button class="boton-play" id="botonPlay">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 5V19L19 12L8 5Z" fill="white"/>
+                            </svg>
+                        </button>
+                        <span id="tiempoActual">0:00</span>
+                        <span id="tiempoTotal">0:00</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de contenido por categoría -->
+        <section class="seccion-contenido" id="seccionContenido">
+            <h2>Contenido Disponible</h2>
+            <div class="lista-contenido" id="listaContenido">
+                <!-- Ejemplos de contenido por categoría -->
+                <div class="item-contenido" data-categoria="peliculas accion" data-url="https://ejemplo.com/peli-accion.mp4">
+                    <img src="https://picsum.photos/200/150?random=1" alt="Película de acción">
+                    <p>La Guerra Final</p>
+                </div>
+                <div class="item-contenido" data-categoria="series comedia" data-url="https://ejemplo.com/serie-comedia.m3u8">
+                    <img src="https://picsum.photos/200/150?random=2" alt="Serie de comedia">
+                    <p>Vida en el Edificio</p>
+                </div>
+                <div class="item-contenido" data-categoria="novelas" data-url="https://ejemplo.com/novela.mp4">
+                    <img src="https://picsum.photos/200/150?random=3" alt="Novela">
+                    <p>Corazón Herido</p>
+                </div>
+                <div class="item-contenido" data-categoria="juegos" data-url="https://ejemplo.com/juego-stream.m3u8">
+                    <img src="https://picsum.photos/200/150?random=4" alt="Stream de juego">
+                    <p>Juego de Aventuras</p>
+                </div>
+                <div class="item-contenido" data-categoria="peliculas comedia" data-url="https://ejemplo.com/peli-comedia.mp4">
+                    <img src="https://picsum.photos/200/150?random=5" alt="Película de comedia">
+                    <p>El Chiste Final</p>
+                </div>
+                <div class="item-contenido" data-categoria="series accion" data-url="https://ejemplo.com/serie-accion.m3u8">
+                    <img src="https://picsum.photos/200/150?random=6" alt="Serie de acción">
+                    <p>Agentes Secretos</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="pie-pagina">
+        <p>&copy; 2025 series y juegos TV - Todos los derechos reservados</p>
+    </footer>
+
+    <!-- Librería HLS.js -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.4.14/dist/hls.min.js"></script>
+    <script>
+        // Elementos del DOM
+        const reproductorContenedor = document.getElementById('reproductorContenedor');
+        const videoPlayer = document.getElementById('videoPlayer');
+        const urlInput = document.getElementById('urlInput');
+        const cargarBtn = document.getElementById('cargarBtn');
+        const botonPlay = document.getElementById('botonPlay');
+        const barraProgreso = document.getElementById('barraProgreso');
+        const progresoActual = document.getElementById('progresoActual');
+        const puntoProgreso = document.getElementById('puntoProgreso');
+        const tiempoActual = document.getElementById('tiempoActual');
+        const tiempoTotal = document.getElementById('tiempoTotal');
+        const categoriaBtns =
+                            
