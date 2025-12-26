@@ -3,33 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Series y juegos TV</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* Carátula de fondo como la que tenías antes */
-            background-image: url("https://i.imgur.com/5Z7X7QH.png");
-            background-size: cover;
-            background-position: center;
-        }
-
-        /* Esta imagen ES el reproductor, así que la centramos y ajustamos */
-        .reproductor {
-            max-width: 80%;
-            max-height: 70%;
-            width: auto;
-            height: auto;
-            border: none; /* Sin borde extra */
-        }
-    </style>
+    <title>Reproductor de Video PlayerJS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <!-- Aquí va la imagen QUE ES EL REPRODUCTOR, en el centro -->
-    <img class="reproductor" src="https://i.imgur.com/BDLdfvr.png" alt="Reproductor de series y juegos">
+    <div class="reproductor">
+        <video id="miVideo" class="video-principal" src="URL_DEL_VIDEO_MP4"></video>
+
+        <div class="controles">
+            <button id="botonPlayPause" class="boton"><i class="fas fa-play"></i></button>
+            <div class="tiempo">
+                <span id="tiempoActual">0:00</span> / <span id="tiempoTotal">0:00</span>
+            </div>
+            <input type="range" id="barraProgreso" class="barra-progreso" value="0" step="1" min="0">
+            <button id="botonMute" class="boton"><i class="fas fa-volume-up"></i></button>
+            <input type="range" id="barraVolumen" class="barra-volumen" value="1" step="0.01" min="0" max="1">
+            <button id="botonVelocidad" class="boton"><i class="fas fa-cog"></i></button>
+            <button id="botonPantallaCompleta" class="boton"><i class="fas fa-expand"></i></button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
