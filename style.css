@@ -1,66 +1,103 @@
+/* ====================================================== */
+/* ARCHIVO CSS: estilos.css */
+/* (Estilos para la página index.html de Series y juegos TV) */
+/* ====================================================== */
+
+
+/* ---------- ESTILO GENERAL DE LA PÁGINA ---------- */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #000; /* Fondo negro */
-    color: #fff;
     margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-}
-
-.container {
-    width: 80%;
-    max-width: 1200px;
     padding: 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #e67e22 0%, #d35400 50%, #e67e22 100%); /* Anaranjado metalizado */
+    background-color: #e67e22;
+    font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px; /* Espacio entre elementos */
 }
 
-.header {
-    background-color: #f44336; /* Color naranja/rojo similar al de la imagen */
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    margin-bottom: 20px;
-    width: 100%;
-}
 
-.video-container {
-    position: relative;
-    margin-bottom: 20px;
-    width: 100%;
-}
-
-video {
-    width: 100%;
-    height: auto;
-}
-
-.categories {
-    margin-top: 20px;
-    width: 100%;
-}
-
-.category-list {
+/* ---------- ESTILO DEL AVISO ARRIBA CON MAI ---------- */
+.aviso-arriba {
     display: flex;
-    overflow-x: auto;
-    padding: 10px 0;
-}
-
-.category-item {
-    flex: 0 0 auto;
-    width: 150px;
-    margin-right: 10px;
-    text-align: center;
-}
-
-.category-item img {
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
     width: 100%;
-    height: auto;
-    border-radius: 5px;
-    margin-bottom: 5px;
 }
 
+.mai-imagen {
+    width: 80px;
+    height: auto;
+    border-radius: 8px; /* Esquinas redondeadas */
+}
+
+
+/* ---------- ESTILO DEL TEXTO PRINCIPAL CON GOKU ---------- */
+.texto-principal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.texto-llamas {
+    font-size: 2.5rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #ffeb3b 0%, #ffc107 50%, #ffeb3b 100%); /* Letra de llamas amarillas */
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 10px rgba(255, 235, 59, 0.8); /* Brillo */
+}
+
+.goku-imagen {
+    width: 100px;
+    height: auto;
+    border-radius: 8px; /* Esquinas redondeadas */
+}
+
+
+/* ---------- ESTILO DE LAS CATEGORÍAS ---------- */
+.categorias {
+    display: flex;
+    flex-wrap: wrap; /* Bajar de línea en móviles */
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+}
+
+.categoria-boton {
+    padding: 10px 20px;
+    background-color: #d35400; /* Color de botones */
+    color: white; /* Texto de botones */
+    border: none;
+    border-radius: 5px; /* Esquinas redondeadas */
+    font-size: 1rem;
+    cursor: pointer; /* Manita al pasar el ratón */
+    transition: background-color 0.3s; /* Efecto de cambio de color */
+}
+
+.categoria-boton:hover {
+    background-color: #e67e22; /* Color al pasar el ratón */
+}
+
+
+/* ---------- ESTILO DEL REPRODUCTOR (EXACTO COMO LA IMAGEN) ---------- */
+.reproductor-contenedor {
+    width: 98%; /* Casi todo el espacio horizontal */
+    max-width: 98%; /* No se salga */
+    margin: 0 auto; /* Centrado */
+    border: 2px solid #d35400; /* Borde anaranjado pequeño */
+    border-radius: 4px; /* Esquinas redondeadas */
+    overflow: hidden; /* Imagen no se salga */
+    background-color: black;
+}
+
+.reproductor-imagen {
+    width: 100%; /* Ancho completo */
+    height: auto; /* Altura automática (proporción original) */
+    display: block; /* Quitar espacios extra */
+}
