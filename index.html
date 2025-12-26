@@ -3,74 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reproductor de Video</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Cuaderno + Reproductor Sin Deformar</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Carátula de fondo (primer enlace) */
+            background-image: url("https://drive.google.com/uc?export=view&id=1dF3rLchh-n4iGk9zTyOb2v2MxhOD3Ix0");
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* 👇 ESTA PARTE GARANTIZA QUE EL REPRODUCTOR NO SE DEFORME 👇 */
+        .reproductor {
+            max-width: 90%; /* No es demasiado ancho */
+            max-height: 90%; /* No es demasiado alto */
+            width: auto; /* Mantiene el ancho original respecto al alto */
+            height: auto; /* Mantiene el alto original respecto al ancho */
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>JUEGOS Y SERIES TV</h1>
-        </div>
-        <div class="video-container">
-            <video id="myVideo" width="640" height="360" controls>
-                <source src="your-video.mp4" type="video/mp4">
-                Tu navegador no soporta el elemento de video.
-            </video>
-        </div>
-
-        <div class="categories">
-            <h2>Películas</h2>
-            <div class="category-list">
-                <div class="category-item">
-                    <img src="movie1.jpg" alt="Película 1">
-                    <span>Película 1</span>
-                </div>
-                <div class="category-item">
-                    <img src="movie2.jpg" alt="Película 2">
-                    <span>Película 2</span>
-                </div>
-                <div class="category-item">
-                    <img src="movie3.jpg" alt="Película 3">
-                    <span>Película 3</span>
-                </div>
-                <!-- Más películas aquí -->
-            </div>
-
-            <h2>Novelas</h2>
-            <div class="category-list">
-                <div class="category-item">
-                    <img src="novel1.jpg" alt="Novela 1">
-                    <span>Novela 1</span>
-                </div>
-                <div class="category-item">
-                    <img src="novel2.jpg" alt="Novela 2">
-                    <span>Novela 2</span>
-                </div>
-                <div class="category-item">
-                    <img src="novel3.jpg" alt="Novela 3">
-                    <span>Novela 3</span>
-                </div>
-                <!-- Más novelas aquí -->
-            </div>
-
-            <h2>Series</h2>
-            <div class="category-list">
-                <div class="category-item">
-                    <img src="series1.jpg" alt="Serie 1">
-                    <span>Serie 1</span>
-                </div>
-                 <div class="category-item">
-                    <img src="series2.jpg" alt="Serie 2">
-                    <span>Serie 2</span>
-                </div>
-                 <div class="category-item">
-                    <img src="series3.jpg" alt="Serie 3">
-                    <span>Serie 3</span>
-                </div>
-                <!-- Más series aquí -->
-            </div>
-        </div>
-    </div>
-     <script src="script.js"></script>
+    <!-- Reproductor (segundo enlace) CON FORMA ORIGINAL -->
+    <img class="reproductor" src="https://drive.google.com/uc?export=view&id=1MQ8xaywPscWNnrbv5ZF36Q5PwB3zpue7" alt="Reproductor con forma original">
 </body>
 </html>
