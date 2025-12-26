@@ -3,74 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reproductor de Video</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Series y juegos TV</title>
+    <style>
+        /* Página: anaranjado metalizado */
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            box-sizing: border-box;
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 50%, #e67e22 100%);
+            background-color: #e67e22;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Aviso arriba con Mai */
+        .aviso-arriba {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .mai-imagen {
+            width: 80px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Texto con llamas y Goku */
+        .texto-principal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .texto-llamas {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ffeb3b 0%, #ffc107 50%, #ffeb3b 100%);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(255, 235, 59, 0.8);
+        }
+
+        .goku-imagen {
+            width: 100px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Categorías funcionando (sin URL aún) */
+        .categorias {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .categoria-boton {
+            padding: 10px 20px;
+            background-color: #d35400;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .categoria-boton:hover {
+            background-color: #e67e22;
+        }
+
+        /* Reproductor: EXACTAMENTE la imagen que te envié, borde anaranjado MUY pequeño */
+        .reproductor-contenedor {
+            width: 100%;
+            max-width: 100%;
+            max-height: 65vh; /* Ocupa casi todo el espacio */
+            margin: 0 auto;
+            border: 2px solid #d35400; /* Borde anaranjado MÍNIMO */
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .reproductor-imagen {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Mantiene proporción EXACTA, sin deformar */
+            background-color: black;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>JUEGOS Y SERIES TV</h1>
-        </div>
-        <div class="video-container">
-            <video id="myVideo" width="640" height="360" controls>
-                <source src="your-video.mp4" type="video/mp4">
-                Tu navegador no soporta el elemento de video.
-            </video>
-        </div>
-
-        <div class="categories">
-            <h2>Películas</h2>
-            <div class="category-list">
-                <div class="category-item">
-                    <img src="movie1.jpg" alt="Película 1">
-                    <span>Película 1</span>
-                </div>
-                <div class="category-item">
-                    <img src="movie2.jpg" alt="Película 2">
-                    <span>Película 2</span>
-                </div>
-                <div class="category-item">
-                    <img src="movie3.jpg" alt="Película 3">
-                    <span>Película 3</span>
-                </div>
-                <!-- Más películas aquí -->
-            </div>
-
-            <h2>Novelas</h2>
-            <div class="category-list">
-                <div class="category-item">
-                    <img src="novel1.jpg" alt="Novela 1">
-                    <span>Novela 1</span>
-                </div>
-                <div class="category-item">
-                    <img src="novel2.jpg" alt="Novela 2">
-                    <span>Novela 2</span>
-                </div>
-                <div class="category-item">
-                    <img src="novel3.jpg" alt="Novela 3">
-                    <span>Novela 3</span>
-                </div>
-                <!-- Más novelas aquí -->
-            </div>
-
-            <h2>Series</h2>
-            <div class="category-list">
-                <div class="category-item">
-                    <img src="series1.jpg" alt="Serie 1">
-                    <span>Serie 1</span>
-                </div>
-                 <div class="category-item">
-                    <img src="series2.jpg" alt="Serie 2">
-                    <span>Serie 2</span>
-                </div>
-                 <div class="category-item">
-                    <img src="series3.jpg" alt="Serie 3">
-                    <span>Serie 3</span>
-                </div>
-                <!-- Más series aquí -->
-            </div>
-        </div>
+    <!-- Aviso arriba con Mai -->
+    <div class="aviso-arriba">
+        <img src="https://i.imgur.com/8ZJZkXx.png" alt="Mai Shiranoi" class="mai-imagen">
+        <span class="texto-llamas">Aviso: Series y juegos TV</span>
     </div>
-     <script src="script.js"></script>
+
+    <!-- Texto principal con Goku -->
+    <div class="texto-principal">
+        <span class="texto-llamas">Series y juegos TV</span>
+        <img src="https://i.imgur.com/7KzYbQw.png" alt="Goku SSJ Fase 1" class="goku-imagen">
+    </div>
+
+    <!-- Categorías más numerosas, funcionando (listas para URL) -->
+    <div class="categorias">
+        <button class="categoria-boton" onclick="irACategoria('novelas')">Novelas</button>
+        <button class="categoria-boton" onclick="irACategoria('series')">Series</button>
+        <button class="categoria-boton" onclick="irACategoria('juegos')">Juegos</button>
+        <button class="categoria-boton" onclick="irACategoria('anime')">Anime</button>
+        <button class="categoria-boton" onclick="irACategoria('peliculas')">Películas</button>
+        <button class="categoria-boton" onclick="irACategoria('documentales')">Documentales</button>
+        <button class="categoria-boton" onclick="irACategoria('programas-tv')">Programas TV</button>
+        <button class="categoria-boton" onclick="irACategoria('musica')">Música</button>
+        <button class="categoria-boton" onclick="irACategoria('deportes')">Deportes</button>
+        <button class="categoria-boton" onclick="irACategoria('kids')">Contenido Infantil</button>
+    </div>
+
+    <!-- Reproductor: EXACTAMENTE la imagen que te envié -->
+    <div class="reproductor-contenedor">
+        <img src="https://i.imgur.com/BDLdfvr.png" alt="Reproductor exacto" class="reproductor-imagen">
+    </div>
+
+    <script>
+        // Función para que las categorías funcionen (tu ponerás las URLs aquí)
+        function irACategoria(nombre) {
+            // Ahora solo muestra un mensaje, tú cambias la URL por la de cada categoría
+            alert(`Estás entrando a la categoría: ${nombre}\nPon la URL aquí en el código!`);
+            // Ejemplo de cómo quedaría después:
+            // window.location.href = `https://tu-pagina.com/categorias/${nombre}.html`;
+        }
+    </script>
 </body>
-</html>
+    </html>
+            
