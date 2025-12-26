@@ -1,57 +1,29 @@
-<!-- ====================================================== -->
-<!-- ARCHIVO HTML: index.html (PÁGINA PRINCIPAL) -->
-<!-- ====================================================== -->
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- Para que se vea bien en móviles -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Título de la pestaña del navegador -->
-    <title>Series y juegos TV</title>
-    <!-- Conexión con el archivo CSS separado (¡importante!) -->
-    <link rel="stylesheet" href="estilos.css">
+    <title>Reproductor de Video PlayerJS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <!-- Sección: Aviso arriba con Mai Shiranoi -->
-    <div class="aviso-arriba">
-        <img src="https://i.imgur.com/8ZJZkXx.png" alt="Mai Shiranoi" class="mai-imagen">
-        <span class="texto-llamas">Aviso: Series y juegos TV</span>
+    <div class="reproductor">
+        <video id="miVideo" class="video-principal" src="URL_DEL_VIDEO_MP4"></video>
+
+        <div class="controles">
+            <button id="botonPlayPause" class="boton"><i class="fas fa-play"></i></button>
+            <div class="tiempo">
+                <span id="tiempoActual">0:00</span> / <span id="tiempoTotal">0:00</span>
+            </div>
+            <input type="range" id="barraProgreso" class="barra-progreso" value="0" step="1" min="0">
+            <button id="botonMute" class="boton"><i class="fas fa-volume-up"></i></button>
+            <input type="range" id="barraVolumen" class="barra-volumen" value="1" step="0.01" min="0" max="1">
+            <button id="botonVelocidad" class="boton"><i class="fas fa-cog"></i></button>
+            <button id="botonPantallaCompleta" class="boton"><i class="fas fa-expand"></i></button>
+        </div>
     </div>
 
-    <!-- Sección: Texto principal con Goku SSJ Fase 1 -->
-    <div class="texto-principal">
-        <span class="texto-llamas">Series y juegos TV</span>
-        <img src="https://i.imgur.com/7KzYbQw.png" alt="Goku SSJ Fase 1" class="goku-imagen">
-    </div>
-
-    <!-- Sección: Categorías funcionando -->
-    <div class="categorias">
-        <button class="categoria-boton" onclick="irACategoria('novelas')">Novelas</button>
-        <button class="categoria-boton" onclick="irACategoria('series')">Series</button>
-        <button class="categoria-boton" onclick="irACategoria('juegos')">Juegos</button>
-        <button class="categoria-boton" onclick="irACategoria('anime')">Anime</button>
-        <button class="categoria-boton" onclick="irACategoria('peliculas')">Películas</button>
-        <button class="categoria-boton" onclick="irACategoria('documentales')">Documentales</button>
-        <button class="categoria-boton" onclick="irACategoria('programas-tv')">Programas TV</button>
-        <button class="categoria-boton" onclick="irACategoria('musica')">Música</button>
-        <button class="categoria-boton" onclick="irACategoria('deportes')">Deportes</button>
-        <button class="categoria-boton" onclick="irACategoria('kids')">Contenido Infantil</button>
-    </div>
-
-    <!-- Sección: Reproductor exacto como tu imagen -->
-    <div class="reproductor-contenedor">
-        <img src="https://i.imgur.com/BDLdfvr.png" alt="Reproductor exacto" class="reproductor-imagen">
-    </div>
-
-    <!-- Código JavaScript para que las categorías funcionen -->
-    <script>
-        function irACategoria(nombre) {
-            alert(`Estás entrando a la categoría: ${nombre}\nPon la URL aquí en el código!`);
-            // Cuando quieras poner las URLs, cambia la línea de arriba por esta (ejemplo):
-            // window.location.href = `https://tu-pagina.com/categorias/${nombre}.html`;
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
