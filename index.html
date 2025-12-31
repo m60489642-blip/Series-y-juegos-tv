@@ -1,4 +1,4 @@
-     <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -65,7 +65,7 @@ body {
   height: auto;
   aspect-ratio: 16/9;
   background: #000;
-  display: block;
+  display: none;
   border-radius: 5px;
 }
 
@@ -79,6 +79,7 @@ body {
   z-index: 1;
   object-fit: cover;
   border-radius: 5px;
+  display: block;
 }
 
 #play-central {
@@ -357,8 +358,8 @@ const playCentral = document.getElementById('play-central');
 const btnPlay = document.getElementById('btn-play');
 const progreso = document.getElementById('progreso');
 const rellenoProgreso = document.getElementById('relleno');
-const tiempoActual = document.querySelector('.tiempo-actual');
-const tiempoTotal = document.querySelector('.tiempo-total');
+const tiempoActualElem = document.querySelector('.tiempo-actual');
+const tiempoTotalElem = document.querySelector('.tiempo-total');
 const btnFullscreen = document.getElementById('btn-fullscreen');
 const btnVolumen = document.getElementById('btn-volumen');
 const btnRetroceder = document.getElementById('btn-retroceder');
@@ -366,8 +367,10 @@ const btnAvanzar = document.getElementById('btn-avanzar');
 const listaContenido = document.getElementById('lista-contenido');
 const botonesCategoria = document.querySelectorAll('.btn-categoria');
 
-// Cargar categoría inicial
-cargarCategoria('peliculas');
+// Cargar categoría inicial al abrir la página
+document.addEventListener('DOMContentLoaded', () => {
+  cargarCategoria('peliculas');
+});
 
 // Eventos de los botones de categoría
 botonesCategoria.forEach(boton => {
@@ -412,6 +415,4 @@ function reproducirContenido(elemento) {
   video.pause();
   
   // Actualizar portada
-  portada.src = elemento.imagen;
-  portada.style.display = 'block';
-    
+     
