@@ -18,13 +18,16 @@ body {
   background-color: #000000;
   color: #ffffff;
   font-family: Arial, sans-serif;
+  padding-bottom: 2rem;
 }
 
+/* HEADER */
 .header {
   padding: 1.5rem;
   text-align: center;
   background-color: #1a1a1a;
   border-bottom: 3px solid #ff6b00;
+  margin-bottom: 1.5rem;
 }
 
 .header h1 {
@@ -34,8 +37,9 @@ body {
   text-transform: uppercase;
 }
 
+/* BIENVENIDA */
 .bienvenida {
-  padding: 2rem 1.5rem;
+  padding: 0 1.5rem 1.5rem;
   text-align: center;
   max-width: 1000px;
   margin: 0 auto;
@@ -53,10 +57,11 @@ body {
   line-height: 1.6;
 }
 
+/* REPRODUCTOR */
 #reproductor {
   width: 95%;
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 0 auto 2rem;
   position: relative;
 }
 
@@ -64,21 +69,18 @@ body {
   width: 100%;
   height: auto;
   aspect-ratio: 16/9;
-  background: #000;
-  display: none;
+  background: #111;
   border-radius: 5px;
+  display: none;
 }
 
 #portada {
   width: 100%;
   height: auto;
   aspect-ratio: 16/9;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  object-fit: cover;
+  background: #111;
   border-radius: 5px;
+  object-fit: cover;
   display: block;
 }
 
@@ -95,7 +97,7 @@ body {
   font-size: 24px;
   border: none;
   cursor: pointer;
-  z-index: 2;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,7 +110,7 @@ body {
   position: absolute;
   bottom: 40px;
   left: 0;
-  z-index: 2;
+  z-index: 5;
   cursor: pointer;
   border-radius: 2px;
 }
@@ -125,7 +127,7 @@ body {
   bottom: 42px;
   color: #fff;
   font-size: 12px;
-  z-index: 2;
+  z-index: 5;
 }
 
 .tiempo-actual {
@@ -146,7 +148,7 @@ body {
   position: absolute;
   bottom: 0;
   left: 0;
-  z-index: 2;
+  z-index: 5;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
@@ -164,15 +166,16 @@ body {
   color: #ff6b00;
 }
 
+/* CATEGORIAS Y CONTENIDO */
 .zona-listas {
   width: 95%;
   max-width: 1000px;
-  margin: 3rem auto;
+  margin: 0 auto;
 }
 
 .botones-categorias {
   display: flex;
-  gap: 1rem;
+  gap: 0.8rem;
   margin-bottom: 2rem;
   flex-wrap: wrap;
   justify-content: center;
@@ -201,7 +204,7 @@ body {
 
 .lista-contenido {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1.5rem;
 }
 
@@ -222,7 +225,7 @@ body {
 
 .elemento-contenido img {
   width: 100%;
-  height: 250px;
+  height: 220px;
   object-fit: cover;
 }
 
@@ -242,6 +245,7 @@ body {
   line-height: 1.4;
 }
 
+/* FOOTER */
 .footer {
   padding: 1.5rem;
   text-align: center;
@@ -249,7 +253,7 @@ body {
   color: #d0d0d0;
   font-size: 0.9rem;
   border-top: 2px solid #ff6b00;
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 </style>
 </head>
@@ -266,7 +270,7 @@ body {
 
 <div id="reproductor">
   <video id="video"></video>
-  <img id="portada" src="https://upload.wikimedia.org/wikipedia/en/3/31/The_Grinch_%282018%29_poster.jpg" alt="Portada">
+  <img id="portada" src="https://upload.wikimedia.org/wikipedia/en/3/31/The_Grinch_%282018%29_poster.jpg" alt="Portada de contenido">
   
   <div class="tiempo tiempo-actual">0:00</div>
   <div class="tiempo tiempo-total">0:00</div>
@@ -329,26 +333,52 @@ const CONTENIDO = {
       descripcion: "Película de animación navideña basada en el cuento de Dr. Seuss",
       imagen: "https://upload.wikimedia.org/wikipedia/en/3/31/The_Grinch_%282018%29_poster.jpg",
       enlace: "https://media-limit-xr8a2.peliculaplay.com/502a88e7f25471efbfc736a5e8aa0102/3b2daa8d9e8c4d41a046e7292d489231-80e1ee27355fbe7a9df67ece09ec7d29-sd.m3u8?hdnts=exp=1767232431_acl=/502a88e7f25471efbfc736a5e8aa0102/*_hmac=474492e3c0af0a1924de48be7542e0606d6b2b2e2a402bac71a3edc762940991"
+    },
+    {
+      titulo: "Coco",
+      descripcion: "Película de animación sobre la tradición mexicana del Día de Muertos",
+      imagen: "https://upload.wikimedia.org/wikipedia/en/9/98/Coco_%282017_film%29_poster.jpg",
+      enlace: "https://example.com/coco.m3u8"
     }
   ],
   "series": [
     {
       titulo: "Yo soy Frankie - Capítulo 1",
-      descripcion: "Serie colombiana sobre una adolescente robot que vive como una chica normal",
+      descripcion: "Serie colombiana sobre una adolescente robot",
       imagen: "https://is1-ssl.mzstatic.com/image/thumb/Video126/v4/6d/8a/3e/6d8a3e2e-48d0-1d60-2e2e-22d1e2222222/pr_source.lsr/268x0w.png",
       enlace: "https://r-limit.flixlat.com/a0555783d27971f0a7114077c0c20102/36be06c219b45205c430684ce79cc361-sd.m3u8?hdnts=exp=1767194003_acl=/a0555783d27971f0a7114077c0c20102/*_hmac=4b7d50048c8b118ff69e14ae984e022380586eb743fff15bcc37df070a216261"
+    },
+    {
+      titulo: "La Casa de Papel - T1E1",
+      descripcion: "Serie española sobre un robo a la Fábrica Nacional de Moneda y Timbre",
+      imagen: "https://upload.wikimedia.org/wikipedia/en/8/89/La_casa_de_papel_T1.jpg",
+      enlace: "https://example.com/casapapel.m3u8"
     }
   ],
   "novelas": [
     {
       titulo: "Escobar, El patrón del mal",
-      descripcion: "Telenovela basada en la vida de Pablo Escobar, líder del cartel de Medellín",
+      descripcion: "Telenovela basada en la vida de Pablo Escobar",
       imagen: "https://www.caracoltv.com/sites/default/files/styles/imagen_destacada/public/2023-12/escobar_el_patron_del_mal.jpg?itok=QZ8X9Z9L",
       enlace: "https://r-limit.flixlat.com/60091737fb0c71eebf9e36a5e8aa0102/5c69364f3b9ec1f6df45d342a7b0a7c0-sd.m3u8?hdnts=exp=1767208963_acl=/60091737fb0c71eebf9e36a5e8aa0102/*_hmac=0375644451e1014d100f265257348c750381be3fc55b92ef2fca44e1f92a3f5c"
     }
   ],
-  "anime": [],
-  "juegos": []
+  "anime": [
+    {
+      titulo: "Naruto - Capítulo 1",
+      descripcion: "Anime sobre un ninja joven que busca ser Hokage",
+      imagen: "https://upload.wikimedia.org/wikipedia/en/9/94/NarutoCoverTankobon1.jpg",
+      enlace: "https://example.com/naruto.m3u8"
+    }
+  ],
+  "juegos": [
+    {
+      titulo: "Gameplay GTA V",
+      descripcion: "Gameplay del popular juego de mundo abierto",
+      imagen: "https://upload.wikimedia.org/wikipedia/en/a/a5/Grand_Theft_Auto_V.png",
+      enlace: "https://example.com/gta.m3u8"
+    }
+  ]
 };
 
 // Variables del reproductor
@@ -367,52 +397,5 @@ const btnAvanzar = document.getElementById('btn-avanzar');
 const listaContenido = document.getElementById('lista-contenido');
 const botonesCategoria = document.querySelectorAll('.btn-categoria');
 
-// Cargar categoría inicial al abrir la página
-document.addEventListener('DOMContentLoaded', () => {
-  cargarCategoria('peliculas');
-});
-
-// Eventos de los botones de categoría
-botonesCategoria.forEach(boton => {
-  boton.addEventListener('click', () => {
-    const categoria = boton.getAttribute('data-categoria');
-    cargarCategoria(categoria);
-    
-    // Actualizar botón activo
-    botonesCategoria.forEach(btn => btn.classList.remove('activa'));
-    boton.classList.add('activa');
-  });
-});
-
-// Función para cargar contenido de una categoría
-function cargarCategoria(categoria) {
-  listaContenido.innerHTML = '';
+// Cargar categoría inicial
   
-  if (CONTENIDO[categoria].length === 0) {
-    listaContenido.innerHTML = '<p style="text-align:center; padding:2rem;">No hay contenido disponible en esta categoría aún</p>';
-    return;
-  }
-  
-  CONTENIDO[categoria].forEach(elemento => {
-    const card = document.createElement('div');
-    card.className = 'elemento-contenido';
-    card.innerHTML = `
-      <img src="${elemento.imagen}" alt="${elemento.titulo}">
-      <div class="elemento-info">
-        <h4>${elemento.titulo}</h4>
-        <p>${elemento.descripcion}</p>
-      </div>
-    `;
-    
-    card.addEventListener('click', () => reproducirContenido(elemento));
-    listaContenido.appendChild(card);
-  });
-}
-
-// Función para reproducir contenido seleccionado
-function reproducirContenido(elemento) {
-  // Detener video actual
-  video.pause();
-  
-  // Actualizar portada
-     
