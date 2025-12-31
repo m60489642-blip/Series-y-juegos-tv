@@ -1,112 +1,417 @@
-<!DOCTYPE html>
+     <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>Series y Juegos TV</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Video.js (reproductor público) -->
-<link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.4.14/dist/hls.min.js"></script>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    margin: 0;
-    background: #0f0f0f;
-    font-family: Arial, sans-serif;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
 }
 
-header {
-    background: linear-gradient(90deg, #d35400, #e67e22, #f39c12);
-    padding: 15px;
-    text-align: center;
-    color: white;
-    font-size: 22px;
-    font-weight: bold;
+.header {
+  padding: 1.5rem;
+  text-align: center;
+  background-color: #1a1a1a;
+  border-bottom: 3px solid #ff6b00;
 }
 
-.player-box {
-    max-width: 1000px;
-    margin: 20px auto;
-    box-shadow: 0 0 20px rgba(0,0,0,.8);
-    border-radius: 10px;
-    overflow: hidden;
+.header h1 {
+  font-size: 1.8rem;
+  letter-spacing: 3px;
+  color: #ff6b00;
+  text-transform: uppercase;
 }
 
-/* Tamaño del reproductor */
-.video-js {
-    width: 100%;
-    height: 520px;
+.bienvenida {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-/* Barra de controles */
-.video-js .vjs-control-bar {
-    background: linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.3));
+.bienvenida h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
 }
 
-/* Colores */
-.video-js .vjs-play-progress,
-.video-js .vjs-volume-level {
-    background-color: #f39c12 !important;
+.bienvenida p {
+  font-size: 1rem;
+  color: #d0d0d0;
+  line-height: 1.6;
 }
 
-/* Botón play grande */
-.video-js .vjs-big-play-button {
-    background-color: rgba(243,156,18,.9);
-    border-radius: 50%;
-    border: none;
+#reproductor {
+  width: 95%;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
 }
 
-/* FORZAR BOTÓN FULLSCREEN */
-.video-js .vjs-fullscreen-control {
-    display: block !important;
+#video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  background: #000;
+  display: block;
+  border-radius: 5px;
 }
 
-/* Fullscreen limpio */
-.video-js.vjs-fullscreen {
-    width: 100% !important;
-    height: 100% !important;
+#portada {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+#play-central {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255,107,0,0.9);
+  color: #fff;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.barra-progreso {
+  width: 100%;
+  height: 4px;
+  background: #333;
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  z-index: 2;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.relleno-progreso {
+  width: 0%;
+  height: 100%;
+  background: #ff6b00;
+  border-radius: 2px;
+}
+
+.tiempo {
+  position: absolute;
+  bottom: 42px;
+  color: #fff;
+  font-size: 12px;
+  z-index: 2;
+}
+
+.tiempo-actual {
+  left: 10px;
+}
+
+.tiempo-total {
+  right: 10px;
+}
+
+.controles {
+  width: 100%;
+  height: 40px;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.btn-control {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.btn-control:hover {
+  color: #ff6b00;
+}
+
+.zona-listas {
+  width: 95%;
+  max-width: 1000px;
+  margin: 3rem auto;
+}
+
+.botones-categorias {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-categoria {
+  padding: 0.8rem 1.5rem;
+  background-color: #1a1a1a;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.btn-categoria.activa {
+  background-color: #ff6b00;
+  color: #000;
+  font-weight: bold;
+}
+
+.btn-categoria:hover {
+  background-color: #2a2a2a;
+}
+
+.lista-contenido {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.elemento-contenido {
+  background-color: #1a1a1a;
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.elemento-contenido:hover {
+  transform: translateY(-5px);
+  border-color: #ff6b00;
+  box-shadow: 0 5px 15px rgba(255,107,0,0.2);
+}
+
+.elemento-contenido img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.elemento-info {
+  padding: 1rem;
+}
+
+.elemento-info h4 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.elemento-info p {
+  font-size: 0.8rem;
+  color: #d0d0d0;
+  line-height: 1.4;
+}
+
+.footer {
+  padding: 1.5rem;
+  text-align: center;
+  background-color: #1a1a1a;
+  color: #d0d0d0;
+  font-size: 0.9rem;
+  border-top: 2px solid #ff6b00;
+  margin-top: 2rem;
 }
 </style>
 </head>
-
 <body>
 
-<header>Series y Juegos TV</header>
-
-<div class="player-box">
-    <video
-        id="player"
-        class="video-js vjs-big-play-centered"
-        controls
-        preload="auto"
-        playsinline
-        webkit-playsinline
-        x5-playsinline
-        data-setup="{}">
-    </video>
+<div class="header">
+  <h1>Series y Juegos TV</h1>
 </div>
 
-<!-- Video.js -->
-<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+<div class="bienvenida">
+  <h2>Bienvenido a tu plataforma favorita</h2>
+  <p>Selecciona contenido de las categorías abajo para reproducirlo - compatible con listas M3U8.</p>
+</div>
+
+<div id="reproductor">
+  <video id="video"></video>
+  <img id="portada" src="https://upload.wikimedia.org/wikipedia/en/3/31/The_Grinch_%282018%29_poster.jpg" alt="Portada">
+  
+  <div class="tiempo tiempo-actual">0:00</div>
+  <div class="tiempo tiempo-total">0:00</div>
+  
+  <div class="barra-progreso" id="progreso">
+    <div class="relleno-progreso" id="relleno"></div>
+  </div>
+  
+  <button id="play-central">
+    <i class="fas fa-play"></i>
+  </button>
+  
+  <div class="controles">
+    <button class="btn-control" id="btn-lista">
+      <i class="fas fa-bars"></i>
+    </button>
+    <button class="btn-control" id="btn-volumen">
+      <i class="fas fa-volume-up"></i>
+    </button>
+    <button class="btn-control" id="btn-retroceder">
+      <i class="fas fa-undo-alt"></i>
+    </button>
+    <button class="btn-control" id="btn-play">
+      <i class="fas fa-play"></i>
+    </button>
+    <button class="btn-control" id="btn-avanzar">
+      <i class="fas fa-redo-alt"></i>
+    </button>
+    <button class="btn-control" id="btn-ajustes">
+      <i class="fas fa-sliders-h"></i>
+    </button>
+    <button class="btn-control" id="btn-fullscreen">
+      <i class="fas fa-expand"></i>
+    </button>
+  </div>
+</div>
+
+<div class="zona-listas">
+  <div class="botones-categorias">
+    <button class="btn-categoria activa" data-categoria="peliculas">Películas</button>
+    <button class="btn-categoria" data-categoria="series">Series</button>
+    <button class="btn-categoria" data-categoria="novelas">Novelas</button>
+    <button class="btn-categoria" data-categoria="anime">Anime</button>
+    <button class="btn-categoria" data-categoria="juegos">Juegos</button>
+  </div>
+
+  <div id="lista-contenido" class="lista-contenido"></div>
+</div>
+
+<div class="footer">
+  <p>© 2025 Series y Juegos TV - Todos los derechos reservados</p>
+</div>
 
 <script>
-const player = videojs('player', {
-    autoplay: true,
-    controls: true,
-    responsive: true,
-    fluid: true,
-    fullscreen: {
-        enterOnRotate: true,
-        exitOnRotate: false
+// Contenido organizado por categorías
+const CONTENIDO = {
+  "peliculas": [
+    {
+      titulo: "El Grinch",
+      descripcion: "Película de animación navideña basada en el cuento de Dr. Seuss",
+      imagen: "https://upload.wikimedia.org/wikipedia/en/3/31/The_Grinch_%282018%29_poster.jpg",
+      enlace: "https://media-limit-xr8a2.peliculaplay.com/502a88e7f25471efbfc736a5e8aa0102/3b2daa8d9e8c4d41a046e7292d489231-80e1ee27355fbe7a9df67ece09ec7d29-sd.m3u8?hdnts=exp=1767232431_acl=/502a88e7f25471efbfc736a5e8aa0102/*_hmac=474492e3c0af0a1924de48be7542e0606d6b2b2e2a402bac71a3edc762940991"
     }
+  ],
+  "series": [
+    {
+      titulo: "Yo soy Frankie - Capítulo 1",
+      descripcion: "Serie colombiana sobre una adolescente robot que vive como una chica normal",
+      imagen: "https://is1-ssl.mzstatic.com/image/thumb/Video126/v4/6d/8a/3e/6d8a3e2e-48d0-1d60-2e2e-22d1e2222222/pr_source.lsr/268x0w.png",
+      enlace: "https://r-limit.flixlat.com/a0555783d27971f0a7114077c0c20102/36be06c219b45205c430684ce79cc361-sd.m3u8?hdnts=exp=1767194003_acl=/a0555783d27971f0a7114077c0c20102/*_hmac=4b7d50048c8b118ff69e14ae984e022380586eb743fff15bcc37df070a216261"
+    }
+  ],
+  "novelas": [
+    {
+      titulo: "Escobar, El patrón del mal",
+      descripcion: "Telenovela basada en la vida de Pablo Escobar, líder del cartel de Medellín",
+      imagen: "https://www.caracoltv.com/sites/default/files/styles/imagen_destacada/public/2023-12/escobar_el_patron_del_mal.jpg?itok=QZ8X9Z9L",
+      enlace: "https://r-limit.flixlat.com/60091737fb0c71eebf9e36a5e8aa0102/5c69364f3b9ec1f6df45d342a7b0a7c0-sd.m3u8?hdnts=exp=1767208963_acl=/60091737fb0c71eebf9e36a5e8aa0102/*_hmac=0375644451e1014d100f265257348c750381be3fc55b92ef2fca44e1f92a3f5c"
+    }
+  ],
+  "anime": [],
+  "juegos": []
+};
+
+// Variables del reproductor
+const video = document.getElementById('video');
+const portada = document.getElementById('portada');
+const playCentral = document.getElementById('play-central');
+const btnPlay = document.getElementById('btn-play');
+const progreso = document.getElementById('progreso');
+const rellenoProgreso = document.getElementById('relleno');
+const tiempoActual = document.querySelector('.tiempo-actual');
+const tiempoTotal = document.querySelector('.tiempo-total');
+const btnFullscreen = document.getElementById('btn-fullscreen');
+const btnVolumen = document.getElementById('btn-volumen');
+const btnRetroceder = document.getElementById('btn-retroceder');
+const btnAvanzar = document.getElementById('btn-avanzar');
+const listaContenido = document.getElementById('lista-contenido');
+const botonesCategoria = document.querySelectorAll('.btn-categoria');
+
+// Cargar categoría inicial
+cargarCategoria('peliculas');
+
+// Eventos de los botones de categoría
+botonesCategoria.forEach(boton => {
+  boton.addEventListener('click', () => {
+    const categoria = boton.getAttribute('data-categoria');
+    cargarCategoria(categoria);
+    
+    // Actualizar botón activo
+    botonesCategoria.forEach(btn => btn.classList.remove('activa'));
+    boton.classList.add('activa');
+  });
 });
 
-/* URL M3U8 */
-player.src({
-    src: "https://data-limit-c.solo-latino.com/d0e14872c74371ef986387c7371d0102/8b6eb10297acc7fbd92dbe8ba6b3760a-sd.m3u8?hdnts=exp=1766866206_acl=/d0e14872c74371ef986387c7371d0102/*_hmac=4987e3728aaffcbf075b155b238d7ea0225ead8b7f2f64c3e4b2246d5b48046a",
-    type: "application/x-mpegURL"
-});
-</script>
+// Función para cargar contenido de una categoría
+function cargarCategoria(categoria) {
+  listaContenido.innerHTML = '';
+  
+  if (CONTENIDO[categoria].length === 0) {
+    listaContenido.innerHTML = '<p style="text-align:center; padding:2rem;">No hay contenido disponible en esta categoría aún</p>';
+    return;
+  }
+  
+  CONTENIDO[categoria].forEach(elemento => {
+    const card = document.createElement('div');
+    card.className = 'elemento-contenido';
+    card.innerHTML = `
+      <img src="${elemento.imagen}" alt="${elemento.titulo}">
+      <div class="elemento-info">
+        <h4>${elemento.titulo}</h4>
+        <p>${elemento.descripcion}</p>
+      </div>
+    `;
+    
+    card.addEventListener('click', () => reproducirContenido(elemento));
+    listaContenido.appendChild(card);
+  });
+}
 
-</body>
-        </html>
+// Función para reproducir contenido seleccionado
+function reproducirContenido(elemento) {
+  // Detener video actual
+  video.pause();
+  
+  // Actualizar portada
+  portada.src = elemento.imagen;
+  portada.style.display = 'block';
+    
